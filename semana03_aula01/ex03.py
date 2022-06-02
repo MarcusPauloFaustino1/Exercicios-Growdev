@@ -47,6 +47,6 @@ print(f'{n}! +1')
 
   
 print(f'\n{"_"*60}\n')
-print(f'E = {x:.10f}')  
+print(f'E = {x}')  
 print(f'\n{"="*60}\n', end="")
     
