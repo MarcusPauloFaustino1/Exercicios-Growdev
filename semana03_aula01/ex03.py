@@ -37,8 +37,16 @@ for i in range(1, len(lista2)):
     
     for i in range(1, len(lista2)):
         x = x / lista2[i]
-        
-print(f'{"_"*60}\n')
+
+print('\nE = 1 + 1 / ',end="")
+for i in range(1, n):
+    e = 1 + i
+    print(f'{i}! + 1 / ', end="")
+    
+print(f'{n}! +1')        
+
+  
+print(f'\n{"_"*60}\n')
 print(f'E = {x:.10f}')  
-print(f'\n{"="*60}\n')
+print(f'\n{"="*60}\n', end="")
     
