@@ -10,6 +10,9 @@ print("E = 1 + 1 / 1! + 1 / 2! + 1 / 3! + 1 / N! +1\n")
 
 n = int(input('Digite um valor inteiro e positivo para N: '))
 
+while n < 0:
+    n = int(input('Digite um valor inteiro e positivo para N: '))
+
 print('Calculando...')
 sleep(2)
 
@@ -45,6 +48,12 @@ for i in range(1, n):
     
 print(f'{n}! +1')        
 
+if n == 0:
+    x = 2
+elif n == 1:
+    x = 1
+elif n == 2:
+    x = 1 / 3
   
 print(f'\n{"_"*60}\n')
 print(f'E = {x}')  
