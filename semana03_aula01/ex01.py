@@ -13,7 +13,7 @@ for var in range(5):
     if a < 0:
         negativos += 1
 
-print(f'\n{"_"*41}\n')
+print(f'\n{"_"*40}\n')
 
 print('RESULTADO:\n')
 sleep(2)
@@ -23,6 +23,6 @@ if negativos == 1:
 else:
     print(f'Dos valores digitados {negativos} são negativos.')
 
-print(f'\n{"="*41}\n')
+print(f'\n{"="*40}\n')
 
 

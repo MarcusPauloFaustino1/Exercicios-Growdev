@@ -1,6 +1,6 @@
 '''Escrever um programa que lê um valor N inteiro e positivo e que calcula e
 escreve o valor de E.
-E = 1 + 1 / 1! + 1 / 2! + 1 / 3! + ... + 1 / N!'''
+E = (1 + 1) / (1! + 1) / (2! + 1) / (3! + 1) /... / (N! + 1)'''
 
 from time import sleep
 
@@ -41,12 +41,12 @@ for i in range(1, len(lista2)):
     for i in range(1, len(lista2)):
         x = x / lista2[i]
 
-print('\nE = 1 + 1 / ',end="")
+print('\nE = (1 + 1) / ',end="")
 for i in range(1, n):
     e = 1 + i
-    print(f'{i}! + 1 / ', end="")
+    print(f'({i}! + 1) / ', end="")
     
-print(f'{n}! +1')        
+print(f'({n}! +1)')        
 
 if n == 0:
     x = 2
