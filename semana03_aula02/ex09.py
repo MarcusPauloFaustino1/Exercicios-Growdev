@@ -24,7 +24,7 @@ sequencia = 0
 listaSequencia = []
 print(tabuleiro)
 
-while cont <= 3 and acertosNavios <= 20:
+while cont <= 35 and acertosNavios <= 20:
     x = int(input('Para determinar a posição na linha digite um valor de 0 a 19: '))
 
     y = int(input('Para determinar a posição na coluna digite um valor de 0 a 19: '))
