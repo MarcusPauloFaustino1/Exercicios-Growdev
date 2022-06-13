@@ -12,16 +12,30 @@ tabuleiro e informar se ele acertou um navio ou água e repetir o procedimento
 até que o usuário derrote todos os navios ou chegue ao limite de 35
 tentativas.'''
 
+
 import random
 
 
-tabuleiro = [[0] * 20] * 20
+
+tabuleiro = []
 
 for i in range (0, 20):
-    x = random.sample(tabuleiro, 1)
-    y = random.sample(x, 1 )
-    #print(x)
-print(y)
-    #tabuleiro[x][y] = 1
+    tab = [0]*20
+    w = random.randint(0, 19)
+    tab[w] = 1
+    tabuleiro.append(tab)
+
+cont = 0
+acertos = 0
+print(tabuleiro)
+
+while cont <= 35 and acertos <= 20:
+    x = int(input('Para determinar a posição na linha digite um valor de 0 a 19: '))
+    y = int(input('Para determinar a posição na coluna digite um valor de 0 a 19: '))
+    if tabuleiro[x][y] == 1:
+        print('Você acertou um navio!')
+        acertos += 1
+        tabuleiro[x][y] = 0
+    elif tabuleiro[x][y] == 0:
+        print('Você acertou a água!')
     
-#print(tabuleiro)
