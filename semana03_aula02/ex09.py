@@ -22,7 +22,7 @@ acertosNavios = 0
 acertosAgua = 0
 sequencia = 0
 listaSequencia = []
-print(tabuleiro)
+
 
 while cont <= 35 and acertosNavios <= 20:
     x = int(input('Para determinar a posição na linha digite um valor de 0 a 19: '))
