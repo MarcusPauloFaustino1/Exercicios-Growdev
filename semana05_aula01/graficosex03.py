@@ -1,5 +1,6 @@
 '''3) Mostre a quantidade de homens e mulheres na base de dados.'''
 
+import numpy as np
 import matplotlib.pyplot as plt
 import csv  
 from functions import purchases_years, read_data, convert_to_dicionary
@@ -12,7 +13,7 @@ info = convert_to_dicionary(data)
 
 m_gender = 0
 f_gender = 0
-genders = ['Homens','Mulheres']
+genders = ["Homens","Mulheres"]
 c = ['c','m']
 for l in info:
     gender = l['sexo']
@@ -23,8 +24,19 @@ for l in info:
 
 n_genders = [m_gender,f_gender]
 
-plt.pie(n_genders, labels = genders, colors = c, startangle = 90, shadow = True, explode = (0.1, 0) )
+def func(pct, allvals):
+    absolute = int(pct/100.*np.sum(allvals))
+    return "{:.1f}%\n({:d})".format(pct, absolute)
 
-plt.legend()
+fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(aspect="equal"))
+
+wedges, texts, autotexts = ax.pie(n_genders, autopct=lambda pct: func(pct, n_genders), textprops=dict(color='w'))
+
+ax.legend(wedges, genders, title = "Legenda", loc = "upper left", bbox_to_anchor = (1,0.5))
+
+plt.setp(autotexts, size=8, weight="bold")
+
+ax.set_title('Quantidade de Homens e Mulheres.')
+
 plt.show()
        
