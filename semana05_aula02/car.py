@@ -19,9 +19,6 @@ meuFusca.andar(100)
 meuFusca.obter_gasolina()'''
 
 
-from xml.sax.handler import feature_validation
-
-
 class Car:
     
     def __init__(self, consumption):
