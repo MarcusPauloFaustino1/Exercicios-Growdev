@@ -32,23 +32,9 @@ class Car:
         max_distance = self.consumption * self.fuel_in_tank
         tank = max_distance - distance 
         if tank < 0:
-            while tank <= 0 and distance >= 0:
-                max_distance = self.consumption * self.fuel_in_tank
-                tank = max_distance - distance 
-                print(f'Você dirigiu por {max_distance:,.1f}, porém infelizmente seu combustível acabou!')
-                self.fuel_in_tank = 0
-                distance = distance - max_distance
-                fill_tank = input('Deseja abastecer?[s / n]: ')
-                if fill_tank in 's':
-                    liters_add = int(input('Quantos litros?: '))
-                    self.fuel_in_tank = int(liters_add)
-                elif fill_tank in 'n':
-                    print('Péssima escolha!')
-                    self.fuel_in_tank = 0
-                if tank == 0:
-                    print('\nSeu combustível acabou... Mas você chegou ao seu destino!')
-                elif tank >= 0:
-                    self.fuel_in_tank -= distance / self.consumption
+            print(f'Você dirigiu por {max_distance:,.1f}, porém infelizmente seu combustível acabou!')
+            self.fuel_in_tank = 0
+                
         
         elif self.fuel_in_tank == 0:
             print('\nSeu combustível acabou... Mas você chegou ao seu destino!')
