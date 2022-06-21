@@ -17,14 +17,17 @@ for line in info:
 def most_frequent(last_names):
     return max(set(last_names), key = last_names.count)
 
-alves = 0
+mostfrequent = most_frequent(last_names)
+
+frequency = 0
 for line in info:
-    if line['sobrenome'] == 'Alves':
-        alves += 1
+    if line['sobrenome'] == mostfrequent:
+        frequency += 1
         
         
 print(f'\n{" SOBRENOME MAIS RECORRENTE ":=^36}\n')
 print('Sobrenome: ', end="")
 print(most_frequent(last_names))
-print(f'\nRecorrência: {alves} vezes\n')
+print(f'\nRecorrência: {frequency} vezes\n')
 print(f'{"="*36}\n')
+
