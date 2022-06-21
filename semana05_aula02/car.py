@@ -34,7 +34,7 @@ class Car:
                 
         
         elif tank == 0:
-            print('\nSeu combustível acabou... Mas você chegou ao seu destino!')]
+            print('\nSeu combustível acabou... Mas você chegou ao seu destino!')
             self.fuel_in_tank = 0
             
         elif tank >= 0:
