@@ -36,11 +36,11 @@ class Car:
             self.fuel_in_tank = 0
                 
         
-        elif self.fuel_in_tank == 0:
+        elif tank == 0:
             print('\nSeu combustível acabou... Mas você chegou ao seu destino!')]
             self.fuel_in_tank = 0
             
-        elif self.fuel_in_tank >= 0:
+        elif tank >= 0:
             self.fuel_in_tank -= distance / self.consumption
             
         
