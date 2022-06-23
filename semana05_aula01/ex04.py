@@ -25,9 +25,35 @@ class bcolors:
     GREEN = '\033[92m'
     BLUE = '\033[94m'
     PURPLE = '\033[95m'
+    CIAN = '\033[96m'
+    RED = '\033[91m'
     RESET = '\033[0m'
+    
+biggest_purchase = 0
+for year in purchases:
+    if purchases[year] > biggest_purchase:
+        biggest_purchase = purchases[year]
+        
+        
+smallest_purchase = 2000000
+for year in purchases:
+    if purchases[year] < smallest_purchase:
+        smallest_purchase = purchases[year]
+        
     
 print(f'\n\n{bcolors.WHITE}{" TOTAL DE COMPRAS ANUAIS ":=^63}{bcolors.RESET}\n')
 for key in sorted(purchases.keys()):
-    print(f'{bcolors.GREEN}{key}:{bcolors.RESET} {bcolors.BLUE}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.PURPLE}R$ {purchases[key]:,.2f}{bcolors.RESET}')
+    
+    if purchases[key] == biggest_purchase:
+        print(f'{bcolors.PURPLE}{key}:{bcolors.RESET} {bcolors.PURPLE}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.PURPLE}R$ {purchases[key]:,.2f}{bcolors.RESET}')
+    
+    elif purchases[key] == smallest_purchase:
+        print(f'{bcolors.RED}{key}:{bcolors.RESET} {bcolors.RED}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.RED}R$ {purchases[key]:,.2f}{bcolors.RESET}')
+        
+    elif key % 2 == 0:
+        print(f'{bcolors.BLUE}{key}:{bcolors.RESET} {bcolors.BLUE}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.BLUE}R$ {purchases[key]:,.2f}{bcolors.RESET}')
+    
+    elif key % 2 != 0:
+        print(f'{bcolors.CIAN}{key}:{bcolors.RESET} {bcolors.CIAN}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.CIAN}R$ {purchases[key]:,.2f}{bcolors.RESET}')
+    
 print(f'\n{bcolors.WHITE}{"="*63}{bcolors.RESET}\n')
