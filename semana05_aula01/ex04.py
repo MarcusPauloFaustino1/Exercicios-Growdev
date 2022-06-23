@@ -27,7 +27,7 @@ class bcolors:
     PURPLE = '\033[95m'
     CIAN = '\033[96m'
     RED = '\033[91m'
-    YELLOW = '\033[90m'
+    GREY = '\033[90m'
     RESET = '\033[0m'
     
 biggest_purchase = 0
@@ -52,9 +52,10 @@ for key in sorted(purchases.keys()):
         print(f'{bcolors.RED}{key}:{bcolors.RESET} {bcolors.RED}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.RED}R$ {purchases[key]:,.2f}{bcolors.RESET}')
         
     elif key % 2 == 0:
-        print(f'{bcolors.YELLOW}{key}:{bcolors.RESET} {bcolors.YELLOW}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.YELLOW}R$ {purchases[key]:,.2f}{bcolors.RESET}')
+        print(f'{bcolors.GREY}{key}:{bcolors.RESET} {bcolors.GREY}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.GREY}R$ {purchases[key]:,.2f}{bcolors.RESET}')
     
     elif key % 2 != 0:
-        print(f'{bcolors.WHITE}{key}:{bcolors.RESET} {bcolors.YELLOW}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.WHITE}R$ {purchases[key]:,.2f}{bcolors.RESET}')
+        print(f'{bcolors.WHITE}{key}:{bcolors.RESET} {bcolors.GREY}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.WHITE}R$ {purchases[key]:,.2f}{bcolors.RESET}')
     
 print(f'\n{bcolors.WHITE}{"="*63}{bcolors.RESET}\n')
+
