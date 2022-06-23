@@ -28,6 +28,7 @@ class bcolors:
     CIAN = '\033[96m'
     RED = '\033[91m'
     GREY = '\033[90m'
+    YELLOW = '\033[93m'
     RESET = '\033[0m'
     
 biggest_purchase = 0
@@ -43,6 +44,10 @@ for year in purchases:
         
     
 print(f'\n\n{bcolors.WHITE}{" TOTAL DE COMPRAS ANUAIS ":=^63}{bcolors.RESET}\n')
+
+print(f'\n{bcolors.RED}{box}{bcolors.RESET}   Ano com menor valor de compras')
+print(f'\n{bcolors.GREEN}{box}{bcolors.RESET}   Ano com maior valor de compras')
+print(f'\n{bcolors.GREY}{box}{bcolors.RESET}   Demais anos\n\n')
 for key in sorted(purchases.keys()):
     
     if purchases[key] == biggest_purchase:
