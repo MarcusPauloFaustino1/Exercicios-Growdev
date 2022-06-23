@@ -27,6 +27,7 @@ class bcolors:
     PURPLE = '\033[95m'
     CIAN = '\033[96m'
     RED = '\033[91m'
+    YELLOW = '\033[90m'
     RESET = '\033[0m'
     
 biggest_purchase = 0
@@ -45,15 +46,15 @@ print(f'\n\n{bcolors.WHITE}{" TOTAL DE COMPRAS ANUAIS ":=^63}{bcolors.RESET}\n')
 for key in sorted(purchases.keys()):
     
     if purchases[key] == biggest_purchase:
-        print(f'{bcolors.PURPLE}{key}:{bcolors.RESET} {bcolors.PURPLE}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.PURPLE}R$ {purchases[key]:,.2f}{bcolors.RESET}')
+        print(f'{bcolors.GREEN}{key}:{bcolors.RESET} {bcolors.GREEN}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.GREEN}R$ {purchases[key]:,.2f}{bcolors.RESET}')
     
     elif purchases[key] == smallest_purchase:
         print(f'{bcolors.RED}{key}:{bcolors.RESET} {bcolors.RED}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.RED}R$ {purchases[key]:,.2f}{bcolors.RESET}')
         
     elif key % 2 == 0:
-        print(f'{bcolors.BLUE}{key}:{bcolors.RESET} {bcolors.BLUE}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.BLUE}R$ {purchases[key]:,.2f}{bcolors.RESET}')
+        print(f'{bcolors.YELLOW}{key}:{bcolors.RESET} {bcolors.YELLOW}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.YELLOW}R$ {purchases[key]:,.2f}{bcolors.RESET}')
     
     elif key % 2 != 0:
-        print(f'{bcolors.CIAN}{key}:{bcolors.RESET} {bcolors.CIAN}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.CIAN}R$ {purchases[key]:,.2f}{bcolors.RESET}')
+        print(f'{bcolors.WHITE}{key}:{bcolors.RESET} {bcolors.YELLOW}{box*(int((purchases[key]*2)/72220/1.3))}{bcolors.RESET}{" "*(40 - int((purchases[key]*2)/72220/1.3))} {bcolors.YELLOW}R$ {purchases[key]:,.2f}{bcolors.RESET}')
     
 print(f'\n{bcolors.WHITE}{"="*63}{bcolors.RESET}\n')
