@@ -1,28 +1,34 @@
 '''6) As reprovações são maiores entre os alunos do 1o, 2o ou 3o ano?. Crie um
 gráfico para mostrar isso.'''
 
-import csv
+
 from dataset import read_data, convert_to_dicionary
+from functions import Box, Colors
+import matplotlib.pyplot as plt
 import os
+import csv
 
 os.system('clear')
 
-filename = 'alunos.csv'
 
-#leitura de Arquivo
 
-data = read_data(filename)
+''' leitura de Arquivo '''
 
-register = len(data)
+filename = 'alunos.csv'    # variavel para arquivo
 
-#transformação dos registros para dicionario (convertendo valores)
+data = read_data(filename)    # variavel leitura de arquivo
+
+
+
+''' transformação dos registros para dicionario (convertendo valores) '''
     
-info = convert_to_dicionary(data)
+info = convert_to_dicionary(data)    # converte para dicionario
 
-for line in info:
-    reproved = {'faults_grade': 0, 'faults': 0,'grade': 0 }
 
-reproved = {'1º ano': 0, '2º ano': 0, '3º ano':0}
+
+''' descobrindo reprovações '''
+
+reproved = {'1º ano': 0, '2º ano': 0, '3º ano':0}    # metodo diconario
 for line in info:
     year = line['ano']
     mean = (line['nota_semestre_2'] + line['nota_semestre_1'])/2
@@ -39,68 +45,72 @@ for line in info:
         if exam < 5 and mean < 7 or faults > 15:
             reproved['3º ano'] += 1
 
-class bcolors:
-    WHITE = '\033[99m'
-    GREEN = '\033[92m'
-    BLUE = '\033[94m'
-    PURPLE = '\033[95m'
-    CIAN = '\033[96m'
-    RED = '\033[91m'
-    GREY = '\033[90m'
-    YELLOW = '\033[93m'
-    BOLD = '\033[1m'
-    RESET = '\033[0m'
 
-box = u'\u2586'
-minibox = u'\u2584'
-heightbox = u'\u25A0'
-bigheight = u'\u2590'
-heightlefth = u'\u258C'
-inferior_left = u'\u2599'
-inferior_right = u'\u259F'
-corner1 = u'\u250C'
-corner2 = u'\u2514'
-corner3 = u'\u2510'
-corner4 = u'\u2518'
-        
-ano_1 = reproved['1º ano']
-ano_2 = reproved['2º ano']
-ano_3 = reproved['3º ano']
 
-mais_reprovacoes = 0
+''' descobrindo ano com maiores reprovações'''
+
+mais_reprovacoes = 0    # método de contador
 for key in reproved:
     if reproved[key] > mais_reprovacoes:
         mais_reprovacoes = reproved[key]
+        ano_mais_reprovacoes = key
         
-
-print(f'\n\n{bcolors.PURPLE}{" "*10}{corner1}{"─"*37}{corner3}{bcolors.RESET}')    
-print(f'{bcolors.PURPLE}{heightbox}{minibox*9}{bcolors.RESET}',end="")
-print(f'{bcolors.BOLD}{" MAIORES REPROVAÇÕES ─ 1º, 2º E 3º ANO "}{bcolors.PURPLE}{minibox*9}',end="")
-print(f'{heightbox}{bcolors.RESET}')
-print(f'{bcolors.PURPLE}{heightlefth}{" "*9}{corner2}{"─"*37}{corner4}{bcolors.RESET}',end="")
-print(f'{bcolors.PURPLE}{" "*9}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.PURPLE}{heightlefth}{" "*57}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.PURPLE}{heightlefth}{bcolors.RED}   {box}{bcolors.RESET}   Ano com maiores reprovações{" "*23}{bcolors.PURPLE}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.PURPLE}{heightlefth}{" "*57}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.PURPLE}{heightlefth}{bcolors.RESET}   {bcolors.GREY}{box}{bcolors.RESET}   Demais anos{" "*39}{bcolors.PURPLE}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.PURPLE}{heightlefth}{" "*57}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.PURPLE}{heightlefth}{" "*57}{bigheight}{bcolors.RESET}')
-
-
-
-
-
-
-
-
-
-
-print(f'{bcolors.PURPLE}{heightlefth}{bcolors.RESET}{bcolors.GREY}{bcolors.BOLD}{"1º ano: "}{box*19}{"─"*13}> Alunos: {ano_1:,}  {bcolors.PURPLE}{bigheight}{bcolors.RESET}')
-
-print(f'{bcolors.PURPLE}{heightlefth}{bcolors.RESET}{bcolors.BOLD}{bcolors.RED}{"2º ano: "}{box*30}{"─"*2}> Alunos: {ano_2:,}  {bcolors.PURPLE}{bigheight}{bcolors.RESET}')
-
-print(f'{bcolors.PURPLE}{heightlefth}{bcolors.RESET}{bcolors.GREY}{bcolors.BOLD}{"3º ano: "}{box*24}{"─"*8}> Alunos: {ano_3:,}{" "*2}{bcolors.PURPLE}{bigheight}{bcolors.RESET}')
-
-print(f'{bcolors.PURPLE}{heightlefth}{" "*57}{bigheight}{bcolors.RESET}')
+count = 0        
+for key in reproved:
+    if reproved[key] < mais_reprovacoes:
+        ano_x = key
+        numero_ano_x = reproved[key]
+        count += 1
+    if count == 1 and reproved[key] < mais_reprovacoes:
+        ano_y = key
+        numero_ano_y = reproved[key]    
         
-print(f'{bcolors.PURPLE}{inferior_left}{minibox*57}{inferior_right}{bcolors.RESET}\n\n\n')
+        
+        
+''' outputs '''
+
+box = Box()               # classe referente às caixas de contorno
+
+colors = Colors()         # classe referente às cores
+
+print(f'\n\n{colors.purple}{" "*10}{box.corner1}{"─"*37}{box.corner3}')    
+print(f'{box.heightbox}{box.minibox*9}{colors.reset}',end="")
+print(f'{colors.bold}{" MAIORES REPROVAÇÕES ─ 1º, 2º E 3º ANO "}{colors.purple}{box.minibox*9}{box.heightbox}')
+print(f'{box.heightleft}{" "*9}{box.corner2}{"─"*37}{box.corner4}{" "*9}{box.bigheight}')
+print(f'{box.heightleft}{" "*57}{box.bigheight}')
+print(f'{box.heightleft}{colors.red}   {box.box}{colors.reset}   ',end="")
+print(f'Ano com maiores reprovações{" "*23}{colors.purple}{box.bigheight}')
+print(f'{box.heightleft}{" "*57}{box.bigheight}')
+print(f'{box.heightleft}   {colors.grey}{box.box}{colors.reset}   ',end="")
+print(f'Demais anos{" "*39}{colors.purple}{box.bigheight}')
+print(f'{box.heightleft}{" "*57}{box.bigheight}')
+print(f'{box.heightleft}{" "*57}{box.bigheight}')
+
+
+print(f'{colors.purple}{box.heightleft}{colors.grey}{colors.bold}{ano_y}: ',end="")
+print(f'{box.box*19}{"─"*13}> Alunos: {numero_ano_y:,}  {colors.purple}{box.bigheight}')
+
+print(f'{box.heightleft}{colors.bold}{colors.red}{ano_mais_reprovacoes}: ',end="")
+print(f'{box.box*30}{"─"*2}> Alunos: {mais_reprovacoes:,}  {colors.purple}{box.bigheight}')
+
+print(f'{box.heightleft}{colors.grey}{colors.bold}{ano_x}: ',end="")
+print(f'{box.box*24}{"─"*8}> Alunos: {numero_ano_x:,}{" "*2}{colors.purple}{box.bigheight}')
+
+print(f'{box.heightleft}{" "*57}{box.bigheight}')
+        
+print(f'{box.inferior_left}{box.minibox*57}{box.inferior_right}\n\n\n')
+
+
+
+''' plotando grafico '''
+
+plt.bar(ano_y, numero_ano_y, label = f'{ano_x}: {numero_ano_x} reprovações', color = 'C7')
+plt.bar(ano_mais_reprovacoes, mais_reprovacoes, label = f'{ano_mais_reprovacoes}: {mais_reprovacoes} reprovações (maior nº)', color = 'r')
+plt.bar(ano_x, numero_ano_x, label = f'{ano_y}: {numero_ano_y} reprovações', color = 'C7')
+
+plt.title('ANO COM MAIOR Nº REPROVAÇÕES', fontweight ='bold', fontsize = 15)
+plt.ylabel('Nº de reprovações', fontweight ='bold', fontsize = 15)
+
+plt.legend()
+plt.show()
+

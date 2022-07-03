@@ -1,25 +1,32 @@
 '''2) Quantos alunos do 1o ano foram aprovados sem exame?'''
 
-import csv
-from termios import CIBAUD
+
 from dataset import read_data, convert_to_dicionary
+from functions import Box, Colors
 import os
+import csv
 
 os.system('clear')
 
-filename = 'alunos.csv'
 
-#leitura de Arquivo
 
-data = read_data(filename)
+''' leitura de Arquivo '''
 
-register = len(data)
+filename = 'alunos.csv'    # variavel para arquivo
 
-#transformação dos registros para dicionario (convertendo valores)
+data = read_data(filename)    # variavel leitura de arquivo
+
+
+
+''' transformação dos registros para dicionario (convertendo valores) '''
     
-info = convert_to_dicionary(data)
+info = convert_to_dicionary(data)    # converte para dicionario
 
-aproved_without_exam = 0
+
+
+'''calculando quantos alunos do primeiro ano foram aprovados sem exame '''
+
+aproved_without_exam = 0       # método de contador
 for line in info:
     year = line['ano']
     grade_1 = line['nota_semestre_1']
@@ -30,30 +37,28 @@ for line in info:
     if year == 1 and exam == 0 and mean >= 7 and faults < 16:
         aproved_without_exam += 1
         
-    
-class bcolors:
-    GREEN = '\033[92m' 
-    PURPLE = '\033[95m'
-    YELLOW = '\033[93m'
-    CYAN = '\033[96m'
-    BOLD = '\033[1m'
-    RESET = '\033[0m'
+        
 
-box = u'\u2586'
-minibox = u'\u2584'
-heightbox = u'\u25A0'
-bigheight = u'\u2590'
-heightlefth = u'\u258C'
-inferior_left = u'\u2599'
-inferior_right = u'\u259F'
-corner1 = u'\u250C'
-corner2 = u'\u2514'
-corner3 = u'\u2510'
-corner4 = u'\u2518'
+''' outputs '''        
+        
+box = Box()               # classe referente às caixas de contorno
 
-print(f'\n\n{bcolors.PURPLE}{" "*10}{corner1}{"─"*42}{corner3}{bcolors.RESET}')    
-print(f'{bcolors.CYAN}{heightbox}{bcolors.RESET}{bcolors.PURPLE}{minibox*9}{bcolors.RESET}{bcolors.BOLD}{" Nº DE ALUNOS DO 1º ANO APROVADOS SEM EXAME "}{bcolors.CYAN}{minibox*9}{bcolors.RESET}{bcolors.PURPLE}{heightbox}{bcolors.RESET}\n{bcolors.CYAN}{heightlefth}{" "*9}{bcolors.CYAN}{corner2}{"─"*42}{corner4}{bcolors.RESET}{bcolors.PURPLE}{" "*9}{bigheight}{bcolors.RESET}')
+colors = Colors()         # classe referente às cores
 
-print(f'{bcolors.CYAN}{heightlefth}{bcolors.RESET} {" "*61}{bcolors.PURPLE}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.CYAN}{heightlefth}{bcolors.RESET}{" "*28}{bcolors.BOLD}{"1 4 9"}{bcolors.PURPLE}{" "*29}{bigheight}{bcolors.RESET}\n{bcolors.CYAN}{heightlefth}{bcolors.RESET}{" "*15}{"alunos foram aprovados no 1º ano"}{" "*15}{bcolors.PURPLE}{bigheight}{bcolors.RESET}\n{bcolors.CYAN}{heightlefth}{bcolors.RESET}{" "*27}{"sem exame"}{" "*26}{bcolors.PURPLE}{bigheight}{bcolors.RESET}\n{bcolors.CYAN}{heightlefth}{bcolors.RESET}{" "*62}{bcolors.PURPLE}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.CYAN}{inferior_left}{minibox*31}{bcolors.RESET}{bcolors.PURPLE}{minibox*31}{inferior_right}{bcolors.RESET}\n\n\n')
+print(f'\n\n{colors.purple}{" "*10}{box.corner1}{"─"*42}{box.corner3}')    # linhas_titulo_superior    
+print(f'{colors.cyan}{box.heightbox}{colors.purple}{box.minibox*9}',end="")    # caixas_teto
+print(f'{colors.reset}{colors.bold}{" Nº DE ALUNOS DO 1º ANO APROVADOS SEM EXAME "}',end="")    # titulo
+print(f'{colors.cyan}{box.minibox*9}{colors.purple}{box.heightbox}')    # caixas_parede
+print(f'{colors.cyan}{box.heightleft}{" "*9}{colors.cyan}{box.corner2}{"─"*42}{box.corner4}',end="")    # linhas_titulo_inferior    
+print(f'{colors.purple}{" "*9}{box.bigheight}')    # caixas_parede
+
+print(f'{colors.cyan}{box.heightleft} {" "*61}{colors.purple}{box.bigheight}')    # caixas_parede
+print(f'{colors.cyan}{box.heightleft}{" "*28}{colors.bold}',end="")    # caixa_parede
+print(f'{colors.green}{aproved_without_exam}{colors.purple}{" "*31}{box.bigheight}')   # resultado e caixa_parede
+print(f'{colors.cyan}{box.heightleft}{colors.reset}{" "*15}{"alunos foram aprovados no 1º ano"}',end="") # texto e caixa_parede
+print(f'{" "*15}{colors.purple}{box.bigheight}')    # caixas_parede
+print(f'{colors.cyan}{box.heightleft}{colors.reset}{" "*27}{"sem exame"}',end="")    # texto e caixa_parede
+print(f'{" "*26}{colors.purple}{box.bigheight}')    # caixa_parede
+print(f'{colors.cyan}{box.heightleft}{" "*62}{colors.purple}{box.bigheight}')    # caixas_parede
+print(f'{colors.cyan}{box.inferior_left}{box.minibox*31}{colors.purple}',end="")    # quina e piso
+print(f'{box.minibox*31}{box.inferior_right}\n\n\n')    #    quina e piso

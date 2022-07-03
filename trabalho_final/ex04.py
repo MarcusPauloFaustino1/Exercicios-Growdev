@@ -1,25 +1,32 @@
 '''4) De todos os alunos que reprovaram quantos foram por falta e quantos foram
 por nota, e quantos foram por ambas as causas?'''
 
-import csv
+from functions import Box, Colors
 from dataset import read_data, convert_to_dicionary
 import os
+import csv
 
 os.system('clear')
 
-filename = 'alunos.csv'
 
-#leitura de Arquivo
+''' leitura de Arquivo '''
 
-data = read_data(filename)
+filename = 'alunos.csv'    # variavel para arquivo
 
-register = len(data)
+data = read_data(filename)    # variavel leitura de arquivo
 
-#transformação dos registros para dicionario (convertendo valores)
+
+
+''' transformação dos registros para dicionario (convertendo valores) '''
     
-info = convert_to_dicionary(data)
+info = convert_to_dicionary(data)    # converte para dicionario
 
-reproved = {'faults_grade': 0, 'faults': 0,'grade': 0 }
+
+
+
+''' descobrindo numero de reprovações por seus respectivos motivos'''
+
+reproved = {'faults_grade': 0, 'faults': 0,'grade': 0 }    # metodo diconario
 
 for line in info:
     
@@ -33,47 +40,41 @@ for line in info:
         reproved['grade'] += 1
     elif faults > 15:
         reproved['faults'] += 1
+
+
+
+''' outputs '''        
+
+box = Box()               # classe referente às caixas de contorno
+
+colors = Colors()         # classe referente às cores
+
+
+grade = reproved['grade']    # separando número de reprovados por nota
+faults_grade = reproved['faults_grade']    # separando número de reprovados por nota e faltas
+faults = reproved['faults']    # separando número de reprovados por faltas
+
+print(f'\n\n{colors.red}{" "*10}{box.corner1}{"─"*36}{box.corner3}')    # linhas_titulo_superior     
+print(f'{colors.grey}{box.heightbox}{colors.red}{box.minibox*9}{colors.reset}',end="")    # caixas_teto
+print(f'{colors.bold}{" QUANTIDADES E MOTIVOS DE REPROVAÇÕES "}{colors.grey}{box.minibox*8}',end="")    # titulo e caixas_teto
+print(f'{colors.red}{box.heightbox}')    # caixas_teto
+print(f'{colors.grey}{box.heightleft}{" "*9}{box.corner2}{"─"*36}{box.corner4}',end="")    # linhas_titulo_inferior
+print(f'{colors.red}{" "*8}{box.bigheight}')    # caixa_parede
+print(f'{colors.grey}{box.heightleft} {" "*54}{colors.red}{box.bigheight}')    # caixa_parede
+
+print(f'{colors.grey}{box.heightleft}{colors.reset}{colors.bold}{"nota e faltas: "}{colors.yellow}',end="")    # caixa_parede e texto_notas_faltas
+print(f'{box.box*18}{"─"*13}>   {colors.reset}{faults_grade:,}  {colors.red}{box.bigheight}')    # resultado notas_faltas
+
+
+print(f'{colors.grey}{box.heightleft}{colors.reset}{colors.bold}{"nota:          "}',end="")    # caixa_parede e texto_notas
+print(f'{colors.cyan}{box.box*20}{"─"*11}> {colors.reset}{grade:,}  {colors.red}{box.bigheight}')    # resultado notas
+
+
+print(f'{colors.grey}{box.heightleft}{colors.reset}{colors.bold}{"faltas:        "}',end="")    # caixa_parede e texto_faltas
+print(f'{colors.purple}{box.box*28}{"─"*3}> {colors.reset}{faults:,}{" "*2}{colors.red}{box.bigheight}')    # resultado faltas
+
+
+print(f'{colors.grey}{box.heightleft} {" "*54}{colors.red}{box.bigheight}')    # caixas_parede
         
-class bcolors:
-    WHITE = '\033[99m'
-    GREEN = '\033[92m'
-    BLUE = '\033[94m'
-    PURPLE = '\033[95m'
-    CIAN = '\033[96m'
-    RED = '\033[91m'
-    GREY = '\033[90m'
-    YELLOW = '\033[93m'
-    BOLD = '\033[1m'
-    RESET = '\033[0m'
-
-box = u'\u2586'
-minibox = u'\u2584'
-heightbox = u'\u25A0'
-bigheight = u'\u2590'
-heightlefth = u'\u258C'
-inferior_left = u'\u2599'
-inferior_right = u'\u259F'
-corner1 = u'\u250C'
-corner2 = u'\u2514'
-corner3 = u'\u2510'
-corner4 = u'\u2518'
-
-print(reproved)
-
-grade = reproved['grade']
-faults_grade = reproved['faults_grade']
-faults = reproved['faults']
-
-print(f'\n\n{bcolors.RED}{" "*10}{corner1}{"─"*36}{corner3}{bcolors.RESET}')    
-print(f'{bcolors.GREY}{heightbox}{bcolors.RESET}{bcolors.RED}{minibox*9}{bcolors.RESET}{bcolors.BOLD}{" QUANTIDADES E MOTIVOS DE REPROVAÇÕES "}{bcolors.GREY}{minibox*8}{bcolors.RESET}{bcolors.RED}{heightbox}{bcolors.RESET}\n{bcolors.GREY}{heightlefth}{" "*9}{bcolors.GREY}{corner2}{"─"*36}{corner4}{bcolors.RESET}{bcolors.RED}{" "*8}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.GREY}{heightlefth}{bcolors.RESET} {" "*54}{bcolors.RED}{bigheight}{bcolors.RESET}')
-
-print(f'{bcolors.GREY}{heightlefth}{bcolors.RESET}{bcolors.BOLD}{"nota e faltas: "}{bcolors.YELLOW}{box*18}{"─"*13}>   {bcolors.RESET}{faults_grade:,}  {bcolors.RED}{bigheight}{bcolors.RESET}')
-
-print(f'{bcolors.GREY}{heightlefth}{bcolors.RESET}{bcolors.BOLD}{"nota:          "}{bcolors.CIAN}{box*20}{"─"*11}> {bcolors.RESET}{grade:,}  {bcolors.RED}{bigheight}{bcolors.RESET}')
-
-print(f'{bcolors.GREY}{heightlefth}{bcolors.RESET}{bcolors.BOLD}{"faltas:        "}{bcolors.PURPLE}{box*28}{"─"*3}> {bcolors.RESET}{faults:,}{" "*2}{bcolors.RED}{bigheight}{bcolors.RESET}')
-
-print(f'{bcolors.GREY}{heightlefth}{bcolors.RESET} {" "*54}{bcolors.RED}{bigheight}{bcolors.RESET}')
-        
-print(f'{bcolors.GREY}{inferior_left}{minibox*27}{bcolors.RESET}{bcolors.RED}{minibox*28}{inferior_right}{bcolors.RESET}\n\n\n')
+print(f'{colors.grey}{box.inferior_left}{box.minibox*27}',end="")   # quina e piso
+print(f'{colors.red}{box.minibox*28}{box.inferior_right}\n\n\n')    # quina e piso

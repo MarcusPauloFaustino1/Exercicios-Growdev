@@ -1,22 +1,29 @@
 '''1) Quantos alunos estudam em cada escola, e qual a escola com mais alunos?'''
 
-import csv
 from dataset import read_data, convert_to_dicionary
+from functions import Box, Colors
+import csv
 import os
 
 os.system('clear')
 
-filename = 'alunos.csv'
 
-#leitura de Arquivo
 
-data = read_data(filename)
+''' leitura de Arquivo '''
 
-register = len(data)
+filename = 'alunos.csv'    # variavel para arquivo
 
-#transformação dos registros para dicionario (convertendo valores)
+data = read_data(filename)    # variavel leitura de arquivo
+
+
+
+''' transformação dos registros para dicionario (convertendo valores) '''
     
-info = convert_to_dicionary(data)
+info = convert_to_dicionary(data)    # converte para dicionario
+
+
+
+''' criando novo dicionario com nomes das escolas e seus respectivos numeros de alunos '''
 
 escolas = {}
 for line in info:
@@ -26,55 +33,64 @@ for line in info:
     elif escola in escolas:
         escolas[escola] += 1
 
+
+
+'''descobrindo qual escola tem mais alunos'''
+
 mais_alunos = 0
 for escola in escolas:
     if escolas[escola] > mais_alunos:
         mais_alunos = escolas[escola]
         
-box = u'\u2586'
-minibox = u'\u2584'
-heightbox = u'\u25A0'
-bigheight = u'\u2590'
-heightlefth = u'\u258C'
-inferior_left = u'\u2599'
-inferior_right = u'\u259F'
-corner1 = u'\u250C'
-corner2 = u'\u2514'
-corner3 = u'\u2510'
-corner4 = u'\u2518'
+        
+        
+''' outputs '''
+        
+box = Box()               # classe referente às caixas de contorno
 
-class bcolors:
-    WHITE = '\033[99m'
-    GREEN = '\033[92m'
-    BLUE = '\033[94m'
-    PURPLE = '\033[95m'
-    CIAN = '\033[96m'
-    RED = '\033[91m'
-    GREY = '\033[90m'
-    YELLOW = '\033[93m'
-    BOLD = '\033[1m'
-    RESET = '\033[0m'
+colors = Colors()         # classe referente às cores
 
 
-print(f'\n\n{bcolors.CIAN}{" "*27}{corner1}{"─"*28}{corner3}{bcolors.RESET}')    
-print(f'{bcolors.CIAN}{heightbox}{minibox*26}{bcolors.BOLD}{" RELAÇÃO DE ALUNOS POR ESCOLA "}{minibox*25}{heightbox}\n{heightlefth}{" "*26}{corner2}{"─"*28}{corner4}{" "*25}{bigheight}{bcolors.RESET}')
+print(f'\n\n{colors.cyan}{" "*27}{box.corner1}{"─"*28}{box.corner3}')    # linhas_titulo
+print(f'{colors.cyan}{box.heightbox}{box.minibox*26}{colors.reset}{colors.bold}',end="")    # caixas_teto
+print(f'{" RELAÇÃO DE ALUNOS POR ESCOLA "}{colors.cyan}{box.minibox*25}{box.heightbox}')    # titulo e caixas_teto
+print(f'{box.heightleft}{" "*26}{box.corner2}{"─"*28}{box.corner4}{" "*25}{box.bigheight}')    # caixas_paredes e linhas_titulo
 
-print(f'{bcolors.CIAN}{heightlefth}{bcolors.RESET}   {bcolors.GREEN}{box}{bcolors.RESET}   Escola com mais alunos{" "*52}{bcolors.CIAN}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.CIAN}{heightlefth}{bcolors.RESET}{" "*81}{bcolors.CIAN}{bigheight}{bcolors.RESET}\n{bcolors.CIAN}{heightlefth}{bcolors.RESET}   {bcolors.GREY}{box}{bcolors.RESET}   Demais escolas{" "*60}{bcolors.CIAN}{bigheight}{bcolors.RESET}\n{bcolors.CIAN}{heightlefth}{bcolors.RESET}{" "*81}{bcolors.CIAN}{bigheight}{bcolors.RESET}\n{bcolors.CIAN}{heightlefth}{bcolors.RESET}{" "*81}{bcolors.CIAN}{bigheight}{bcolors.RESET}')
+print(f'{colors.cyan}{box.heightleft}   {colors.green}{box.box}{colors.reset}',end="")    # caixa_parede e caixa_legenda
+print(f'   Escola com mais alunos{" "*52}{colors.cyan}{box.bigheight}')     # texto_legenda e caixas_parede
+print(f'{box.heightleft}{" "*81}{box.bigheight}')    # caixas_parede
+print(f'{box.heightleft}',end="")  # caixa_parede
+print(f'{colors.grey}   {box.box}{colors.reset}   Demais escolas',end="")    # legenda_1
+print(f'{" "*60}{colors.cyan}{box.bigheight}')    # caixa_parede
+print(f'{box.heightleft}{" "*81}{box.bigheight}\n{box.heightleft}{" "*81}{box.bigheight}')    # caixas_parede
 
+# mini grafico: escolas - alunos
 c = 0
 for key in escolas.keys():
     espaco = 17 - len(key)
     if escolas[key] == mais_alunos:
-        print(f'{bcolors.CIAN}{heightlefth}{bcolors.RESET}   {bcolors.GREEN}{bcolors.BOLD}{key}:{" "*espaco}{bcolors.RESET} {bcolors.GREEN}{box*(int((escolas[key]*10)/200))}{bcolors.RESET}{" "*(45 - int((escolas[key]*10)/200))} {bcolors.GREEN}{bcolors.BOLD}Alunos: {escolas[key]}{bcolors.RESET}  {bcolors.CIAN}{bigheight}{bcolors.RESET}')
+        print(f'{colors.cyan}{box.heightleft}   {colors.green}{colors.bold}{key}:',end="")
+        print(f'{" "*espaco} {colors.green}{box.box*(int((escolas[key]*10)/200))}',end="")
+        print(f'{" "*(45 - int((escolas[key]*10)/200))} {colors.green}{colors.bold}',end="")
+        print(f'Alunos: {escolas[key]}  {colors.cyan}{box.bigheight}')
          
     elif c % 2 == 0:
-        print(f'{bcolors.CIAN}{heightlefth}{bcolors.RESET}   {key}:{" "*espaco} {bcolors.GREY}{box*(int((escolas[key]*10)/200))}{bcolors.RESET}{" "*(45 - int((escolas[key]*10)/200))} Alunos: {escolas[key]}  {bcolors.CIAN}{bigheight}{bcolors.RESET}')
+        print(f'{colors.cyan}{box.heightleft}   {colors.reset}{key}:{" "*espaco}',end="") 
+        print(f' {colors.grey}{box.box*(int((escolas[key]*10)/200))}{colors.reset}',end="")
+        print(f'{" "*(45 - int((escolas[key]*10)/200))} Alunos: {escolas[key]} ',end="") 
+        print(f' {colors.cyan}{box.bigheight}')
     
     elif c % 2 != 0:
-        print(f'{bcolors.CIAN}{heightlefth}{bcolors.RESET}   {key}:{" "*espaco} {bcolors.GREY}{box*(int((escolas[key]*10)/200))}{bcolors.RESET}{" "*(45 - int((escolas[key]*10)/200))} Alunos: {escolas[key]}  {bcolors.CIAN}{bigheight}{bcolors.RESET}')
+        print(f'{colors.cyan}{box.heightleft}   {colors.reset}{key}:',end="")
+        print(f'{" "*espaco} {colors.grey}{box.box*(int((escolas[key]*10)/200))}',end="")
+        print(f'{colors.reset}{" "*(45 - int((escolas[key]*10)/200))} ',end="") 
+        print(f'Alunos: {escolas[key]}  {colors.cyan}{box.bigheight}')
     
     c += 1
     
-print(f'{bcolors.CIAN}{heightlefth}{" "*81}{bigheight}\n{heightlefth}{" "*81}{bigheight}\n{heightlefth}{" "*81}{bigheight}\n{inferior_left}{bcolors.RESET}',end="")
-print(f'{bcolors.CIAN}{minibox*81}{inferior_right}{bcolors.RESET}\n\n\n')
+# parte de baixo da caixa de contorno
+
+print(f'{colors.cyan}{box.heightleft}{" "*81}{box.bigheight}')    # caixas_parede
+print(f'{box.heightleft}{" "*81}{box.bigheight}') # caixas_parede
+print(f'{box.heightleft}{" "*81}{box.bigheight}\n{box.inferior_left}',end="")   # caixas_parede e quina_esquerda
+print(f'{colors.cyan}{box.minibox*81}{box.inferior_right}\n\n\n')    # caixas-piso e quina_direita

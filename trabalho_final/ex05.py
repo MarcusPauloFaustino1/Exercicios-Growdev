@@ -1,26 +1,31 @@
 '''5) Qual a média de todas as notas (do 1o e 2o semestre) dos alunos do 2o ano?'''
 
-import csv
+from functions import Box, Colors
 from dataset import read_data, convert_to_dicionary
 import os
+import csv
 
 os.system('clear')
 
-filename = 'alunos.csv'
 
-#leitura de Arquivo
 
-data = read_data(filename)
+''' leitura de Arquivo '''
 
-register = len(data)
+filename = 'alunos.csv'    # variavel para arquivo
 
-#transformação dos registros para dicionario (convertendo valores)
+data = read_data(filename)    # variavel leitura de arquivo
+
+
+
+''' transformação dos registros para dicionario (convertendo valores) '''
     
-info = convert_to_dicionary(data)
+info = convert_to_dicionary(data)    # converte para dicionario
 
-reproved = {'faults_grade': 0, 'faults': 0,'grade': 0 }
 
-grades = []
+
+''' descobrindo as medias dos alunos do 2º ano '''
+
+grades = []    # metodo lista
 for line in info:
     year = line['ano']
     grade_1 = line['nota_semestre_1']
@@ -30,42 +35,25 @@ for line in info:
         grades.append(grade_1)
         grades.append(grade_2)
     
-mean = sum(grades) / len(grades) 
-
-print(f'{mean:.2f}')
-
-class bcolors:
-    WHITE = '\033[99m'
-    GREEN = '\033[92m'
-    BLUE = '\033[94m'
-    PURPLE = '\033[95m'
-    CIAN = '\033[96m'
-    RED = '\033[91m'
-    GREY = '\033[90m'
-    YELLOW = '\033[93m'
-    BOLD = '\033[1m'
-    RESET = '\033[0m'
-
-box = u'\u2586'
-minibox = u'\u2584'
-heightbox = u'\u25A0'
-bigheight = u'\u2590'
-heightlefth = u'\u258C'
-inferior_left = u'\u2599'
-inferior_right = u'\u259F'
-corner1 = u'\u250C'
-corner2 = u'\u2514'
-corner3 = u'\u2510'
-corner4 = u'\u2518'
+mean = sum(grades) / len(grades)    # calculando media geral 
 
 
-print(f'\n\n{bcolors.YELLOW}{corner1}{"─"*23}{corner3}{bcolors.RESET}')   
-print(f'{bcolors.BOLD}{bcolors.CIAN}  MÉDIA GERAL DO 2º ANO{bcolors.RESET}') 
-print(f'{bcolors.YELLOW}{heightbox}{minibox*23}{heightbox}{bcolors.RESET}')
-print(f'{bcolors.YELLOW}{heightlefth}{" "*23}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.YELLOW}{heightlefth}{" "*23}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.YELLOW}{heightlefth}   Média:{bcolors.BOLD}{bcolors.CIAN}{mean:^ 14.2f}{bcolors.YELLOW}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.YELLOW}{heightlefth}{" "*23}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.YELLOW}{heightlefth}{" "*23}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.YELLOW}{inferior_left}{minibox*23}{inferior_right}{bcolors.RESET}\n\n\n')
+
+''' outputs '''        
+
+box = Box()               # classe referente às caixas de contorno
+
+colors = Colors()         # classe referente às cores
+
+
+print(f'\n\n{colors.yellow}{box.corner1}{"─"*23}{box.corner3}{colors.reset}')   # linhas_titulo
+print(f'{colors.bold}{colors.cyan}  MÉDIA GERAL DO 2º ANO')   # titulo
+print(f'{colors.yellow}{box.heightbox}{box.minibox*23}{box.heightbox}')    # caixas_teto
+print(f'{box.heightleft}{" "*23}{box.bigheight}')    # caixas_parede
+print(f'{box.heightleft}{" "*23}{box.bigheight}')    # caixas_parede
+print(f'{box.heightleft}{colors.reset}   Média:{colors.bold}',end="")    # caixa_parede e texto_media
+print(f'{colors.cyan}{mean:^ 14.2f}{colors.yellow}{box.bigheight}')      # resultado e caixa_parede
+print(f'{box.heightleft}{" "*23}{box.bigheight}')    # caixas_parede
+print(f'{box.heightleft}{" "*23}{box.bigheight}')    # caixas_parede
+print(f'{box.inferior_left}{box.minibox*23}{box.inferior_right}\n\n\n')    # quina e piso
     

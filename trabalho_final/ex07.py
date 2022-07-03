@@ -1,23 +1,29 @@
 '''7) Qual dos anos (1o, 2o ou 3o) mais procura a monitoria?. Crie um gráfico para
 mostrar esses dados.'''
 
-import csv
 from dataset import read_data, convert_to_dicionary
+from functions import Box, Colors
+import matplotlib.pyplot as plt
 import os
+import csv
 
 os.system('clear')
 
-filename = 'alunos.csv'
+''' leitura de Arquivo '''
 
-#leitura de Arquivo
+filename = 'alunos.csv'    # variavel para arquivo
 
-data = read_data(filename)
+data = read_data(filename)    # variavel leitura de arquivo
 
-register = len(data)
 
-#transformação dos registros para dicionario (convertendo valores)
+
+''' transformação dos registros para dicionario (convertendo valores) '''
     
-info = convert_to_dicionary(data)
+info = convert_to_dicionary(data)    # converte para dicionario
+
+
+
+''' descobrindo quantos buscaram monitoria em cada ano '''
 
 monitored = {'1º ano': 0, '2º ano': 0, '3º ano':0}
 
@@ -36,49 +42,68 @@ for line in info:
         monitored['3º ano'] += 1
 
 
-monitored_1 = monitored['1º ano']
-monitored_2 = monitored['2º ano']
-monitored_3 = monitored['3º ano']
+''' descobrindo ano com maior busca por monitorias'''
 
-class bcolors:
-    WHITE = '\033[99m'
-    GREEN = '\033[92m'
-    BLUE = '\033[94m'
-    PURPLE = '\033[95m'
-    CIAN = '\033[96m'
-    RED = '\033[91m'
-    GREY = '\033[90m'
-    YELLOW = '\033[93m'
-    BOLD = '\033[1m'
-    RESET = '\033[0m'
-
-box = u'\u2586'
-minibox = u'\u2584'
-heightbox = u'\u25A0'
-bigheight = u'\u2590'
-heightlefth = u'\u258C'
-inferior_left = u'\u2599'
-inferior_right = u'\u259F'
-corner1 = u'\u250C'
-corner2 = u'\u2514'
-corner3 = u'\u2510'
-corner4 = u'\u2518'
-
-print(f'\n\n{bcolors.BLUE}{" "*10}{corner1}{"─"*36}{corner3}{bcolors.RESET}')    
-print(f'{bcolors.BLUE}{heightbox}{minibox*9}{bcolors.RESET}{bcolors.BOLD}{"  MAIOR PROCURA POR MONITORIA ─ ANOS  "}{bcolors.BLUE}{minibox*9}{heightbox}{bcolors.RESET}')
-print(f'{bcolors.BLUE}{heightlefth}{" "*9}{corner2}{"─"*36}{corner4}{" "*9}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.BLUE}{heightlefth}{" "*56}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.BLUE}{heightlefth}{bcolors.PURPLE}   {box}{bcolors.RESET}   Ano com maior procura por monitoria{" "*14}{bcolors.BLUE}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.BLUE}{heightlefth}{" "*56}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.BLUE}{heightlefth}{bcolors.RESET}   {bcolors.GREY}{box}{bcolors.RESET}   Demais anos{" "*38}{bcolors.BLUE}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.BLUE}{heightlefth}{bcolors.GREY}{" "*56}{bcolors.BLUE}{bigheight}{bcolors.RESET}')
-
-print(f'{bcolors.BLUE}{heightlefth}{bcolors.GREY}{bcolors.BOLD}{" 1º ano: "}{box*19}{"─"*12}>  Alunos: {monitored_1:,}  {bcolors.BLUE}{bigheight}{bcolors.RESET}')
-
-print(f'{bcolors.BLUE}{heightlefth}{bcolors.GREY}{bcolors.BOLD}{bcolors.PURPLE}{" 2º ano: "}{box*22}{"─"*9}>  Alunos: {monitored_2:,}  {bcolors.BLUE}{bigheight}{bcolors.RESET}')
-
-print(f'{bcolors.BLUE}{heightlefth}{bcolors.GREY}{" 3º ano: "}{box*21}{"─"*10}>  Alunos: {monitored_3:,}{" "*2}{bcolors.BLUE}{bigheight}{bcolors.RESET}')
-
-print(f'{bcolors.BLUE}{heightlefth}{bcolors.GREY}{" "*56}{bcolors.BLUE}{bigheight}{bcolors.RESET}')
+mais_monitorias = 0    # método de contador
+for key in monitored:
+    if monitored[key] > mais_monitorias:
+        mais_monitorias = monitored[key]
+        ano_mais_monitorias = key
         
-print(f'{bcolors.BLUE}{inferior_left}{minibox*56}{inferior_right}{bcolors.RESET}\n\n\n')
+count = 0        
+for key in monitored:
+    if monitored[key] < mais_monitorias:
+        ano_x = key
+        numero_ano_x = monitored[key]
+        count += 1
+    if count == 1 and monitored[key] < mais_monitorias:
+        ano_y = key
+        numero_ano_y = monitored[key]
+        
+        
+        
+''' outputs '''
+
+box = Box()               # classe referente às caixas de contorno
+
+colors = Colors()         # classe referente às cores
+
+print(f'\n\n{colors.blue}{" "*10}{box.corner1}{"─"*36}{box.corner3}')    
+print(f'{box.heightbox}{box.minibox*9}{colors.reset}{colors.bold}',end="")
+print(f'{"  MAIOR PROCURA POR MONITORIA ─ ANOS  "}{colors.blue}{box.minibox*9}{box.heightbox}')
+print(f'{box.heightleft}{" "*9}{box.corner2}{"─"*36}{box.corner4}{" "*9}{box.bigheight}')
+print(f'{box.heightleft}{" "*56}{box.bigheight}')
+print(f'{box.heightleft}{colors.purple}   {box.box}{colors.reset}   ',end="")
+print(f'Ano com maior procura por monitoria{" "*14}{colors.blue}{box.bigheight}')
+print(f'{box.heightleft}{" "*56}{box.bigheight}')
+print(f'{box.heightleft}   {colors.grey}{box.box}{colors.reset}   ',end="")
+print(f'Demais anos{" "*38}{colors.blue}{box.bigheight}')
+print(f'{box.heightleft}{colors.grey}{" "*56}{colors.blue}{box.bigheight}')
+
+print(f'{box.heightleft}{colors.grey}{colors.bold} {ano_y}: {box.box*19}{"─"*12}',end="")
+print(f'>  Alunos: {numero_ano_y:,}  {colors.blue}{box.bigheight}')
+
+print(f'{box.heightleft}{colors.bold}{colors.purple}',end="")
+print(f' {ano_mais_monitorias}: {box.box*22}{"─"*9}>  Alunos: {mais_monitorias:,}  {colors.blue}{box.bigheight}')
+
+print(f'{box.heightleft}{colors.grey} {ano_x}: {box.box*21}{"─"*10}',end="")
+print(f'>  Alunos: {numero_ano_x:,}{" "*2}{colors.blue}{box.bigheight}')
+
+print(f'{box.heightleft}{colors.grey}{" "*56}{colors.blue}{box.bigheight}')
+        
+print(f'{box.inferior_left}{box.minibox*56}{box.inferior_right}\n\n\n')
+
+
+
+''' plotando grafico'''
+
+plt.bar('1º ', numero_ano_y, label = f'{ano_y}: {numero_ano_y} alunos', color = 'C7')
+plt.bar('2º ', mais_monitorias, label = f'{ano_mais_monitorias}: {mais_monitorias} alunos (maior procura)', color = 'm')
+plt.bar('3º ', numero_ano_x, label = f'{ano_x}: {numero_ano_x} alunos', color = 'C7')
+
+plt.title('ANO COM MAIOR PROCURA POR MONITORIA', fontweight ='bold', fontsize = 15)
+plt.ylabel('Nº de reprovações', fontweight ='bold', fontsize = 15)
+plt.xlabel('ANOS', fontweight ='bold', fontsize = 15)
+
+plt.legend()
+plt.show()

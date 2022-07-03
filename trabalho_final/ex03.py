@@ -1,26 +1,35 @@
 '''3) Quantos alunos do 3o ano reprovaram? e desses quantos procuraram
 monitoria?'''
 
-import csv
+from functions import Box, Colors
 from dataset import read_data, convert_to_dicionary
 import os
+import csv
 
 os.system('clear')
 
-filename = 'alunos.csv'
 
-#leitura de Arquivo
 
-data = read_data(filename)
+''' leitura de Arquivo '''
 
-register = len(data)
+filename = 'alunos.csv'    # variavel para arquivo
 
-#transformação dos registros para dicionario (convertendo valores)
+data = read_data(filename)    # variavel leitura de arquivo
+
+
+
+
+''' transformação dos registros para dicionario (convertendo valores) '''
     
-info = convert_to_dicionary(data)
+info = convert_to_dicionary(data)    # converte para dicionario
 
-reproved = 0
-monitored = 0
+
+
+
+''' descobrindo quantos alunos foram reprovados e quantos desses buscaram monitoria '''
+
+reproved = 0    # método de contador
+monitored = 0    # método de contador
 for line in info:
     year = line['ano']
     exam = line['nota_exame']
@@ -39,33 +48,26 @@ for line in info:
             
 
 
-class bcolors:
-    WHITE = '\033[99m'
-    GREEN = '\033[92m'
-    BLUE = '\033[94m'
-    PURPLE = '\033[95m'
-    CIAN = '\033[96m'
-    RED = '\033[91m'
-    GREY = '\033[90m'
-    YELLOW = '\033[93m'
-    BOLD = '\033[1m'
-    RESET = '\033[0m'
+''' outputs '''
 
-box = u'\u2586'
-minibox = u'\u2584'
-heightbox = u'\u25A0'
-bigheight = u'\u2590'
-heightlefth = u'\u258C'
-inferior_left = u'\u2599'
-inferior_right = u'\u259F'
-corner1 = u'\u250C'
-corner2 = u'\u2514'
-corner3 = u'\u2510'
-corner4 = u'\u2518'
+box = Box()    # classe referente às caixas de contorno
 
-print(f'\n\n{bcolors.BLUE}{" "*10}{corner1}{"─"*34}{corner3}{bcolors.RESET}')    
-print(f'{bcolors.GREY}{heightbox}{bcolors.RESET}{bcolors.BLUE}{minibox*9}{bcolors.RESET}{bcolors.BOLD}{"     ALUNOS REPROVADOS NO 3º ANO    "}{bcolors.GREY}{minibox*9}{bcolors.RESET}{bcolors.BLUE}{heightbox}{bcolors.RESET}\n{bcolors.GREY}{heightlefth}{" "*9}{bcolors.GREY}{corner2}{"─"*34}{corner4}{bcolors.RESET}{bcolors.BLUE}{" "*9}{bigheight}{bcolors.RESET}')
+colors = Colors()    # classe referente às cores
 
-print(f'{bcolors.GREY}{heightlefth}{bcolors.RESET} {" "*53}{bcolors.BLUE}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.GREY}{heightlefth}{bcolors.RESET}{bcolors.BOLD}{"Total de alunos reprovados:"}{bcolors.RED} {box*20}{bcolors.RESET} {reproved}{bcolors.BLUE} {bigheight}{bcolors.RESET}\n{bcolors.GREY}{heightlefth}{bcolors.RESET}{bcolors.BOLD}{"Destes procuraram mentoria:"}{bcolors.RESET}{bcolors.YELLOW} {box*10}{bcolors.RESET} {monitored}{bcolors.BLUE}{" "*12}{bigheight}{bcolors.RESET}\n{bcolors.GREY}{heightlefth}{bcolors.RESET}{" "*54}{bcolors.BLUE}{bigheight}{bcolors.RESET}\n{bcolors.GREY}{heightlefth}{bcolors.RESET}{" "*54}{bcolors.BLUE}{bigheight}{bcolors.RESET}')
-print(f'{bcolors.GREY}{inferior_left}{minibox*27}{bcolors.RESET}{bcolors.BLUE}{minibox*27}{inferior_right}{bcolors.RESET}\n\n\n')
+print(f'\n\n{colors.blue}{" "*10}{box.corner1}{"─"*34}{box.corner3}')    # linhas_titulo_superior    
+print(f'{colors.grey}{box.heightbox}{colors.blue}{box.minibox*9}',end="")    # caixas_teto
+print(f'{colors.reset}{colors.bold}{"     ALUNOS REPROVADOS NO 3º ANO    "}',end="")    # titulo
+print(f'{colors.grey}{box.minibox*9}{colors.blue}{box.heightbox}')    # caixas_teto
+print(f'{colors.grey}{box.heightleft}{" "*9}{box.corner2}{"─"*34}{box.corner4}',end="")    # linhas_titulo_inferior
+print(f'{colors.blue}{" "*9}{box.bigheight}')
+
+print(f'{colors.grey}{box.heightleft} {" "*53}{colors.blue}{box.bigheight}')    # caixas_parede
+print(f'{colors.grey}{box.heightleft}{colors.reset}{colors.bold}{"Total de alunos reprovados:"}',end="")    # caixa_parede e texto
+print(f'{colors.red} {box.box*20} {colors.reset}{reproved}{colors.blue} {box.bigheight}')    # resultado e caixa_parede
+print(f'{colors.grey}{box.heightleft}{colors.reset}{colors.bold}{"Destes procuraram mentoria:"}',end="")
+print(f'{colors.yellow} {box.box*10} {colors.reset}{monitored}',end="")    # resultado 
+print(f'{colors.blue}{" "*12}{box.bigheight}')    # caixa_parede
+print(f'{colors.grey}{box.heightleft}{" "*54}{colors.blue}{box.bigheight}')    # caixas_parede
+print(f'{colors.grey}{box.heightleft}{" "*54}{colors.blue}{box.bigheight}')    # caixas_parede
+print(f'{colors.grey}{box.inferior_left}{box.minibox*27}',end="")    # quina e piso
+print(f'{colors.blue}{box.minibox*27}{box.inferior_right}\n\n\n')    # quina e piso 
